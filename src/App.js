@@ -67,7 +67,7 @@ function App() {
     <div className="App">
       <MyChart data={dateHidrograf} />
       <MyChart data={timpCota} />
-      <test />
+      <div >Test app</div>
     </div>
   );
 }
