@@ -3,16 +3,7 @@ import { Chart } from 'react-charts';
 
 export const MyChart = (props) => {
   const data = React.useMemo(
-    () => [
-      {
-        label: 'Series 1',
-        data: props.data.timpDebit,
-      },
-      // {
-      //   label: 'Series 2',
-      //   data: props.data.timpDebitAtenuare
-      // }
-    ],
+    () => props.data,
     [props.data]
   );
 

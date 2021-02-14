@@ -1,19 +1,3 @@
-function calculVolumApaLac(arrayCote = [], arraySuprafete = [], NNR) {
-  var cotaInferioara = NNR;
-  var suprafataInferioara = 0;
-  var arrayVolum = [];
-  var volum = 0;
-  for (var i = 0; i < arrayCote.length; i++) {
-    volum +=
-      ((arraySuprafete[i] - suprafataInferioara) / 2) *
-      (arrayCote[i] - cotaInferioara);
-    arrayVolum[i] = volum;
-    cotaInferioara = arrayCote[i];
-    suprafataInferioara = arraySuprafete[i];
-  }
-  return arrayVolum;
-}
-
 const interpolareBiliniara = (h, biliniarArray) => {
   let minIndexA = (() => {
     for (let i = 0; i < biliniarArray.length - 1; i++) {
@@ -28,14 +12,25 @@ const interpolareBiliniara = (h, biliniarArray) => {
   return minB + percent * (maxB - minB)
 };
 
-//2*S/delta t + Q
-const rightFormula = (S2, Q2, deltaT) => {
-  return (2 * S2) / deltaT + Q2;
+const concatenareValori = (x, y) => {
+  let xy = [];
+  for (let i = 0; i < x.length; i++) {
+    xy.push([x[i], y[i]]);
+  }
+  return xy;
 };
 
-const leftFormula = (S1, Q1, deltaT) => {
-  return (2 * S1 / deltaT - Q1)
+const getH = (NNR, overflow, coteLac, cotaVolumAtenuat, deltaT, leftSum) => {
+  let maxH = coteLac[coteLac.length - 1];
+  let increment = 0.01
+  for (let H = NNR; H < maxH; H += increment) {
+    let S2 = interpolareBiliniara(H, cotaVolumAtenuat)
+    let Q2 = overflow.outflow(H)
+    let rightSum = ((2 * S2) / deltaT) + Q2
+    if (rightSum / leftSum > 0.95) {
+      return H
+    }
+  }
 }
 
-
-export { calculVolumApaLac, interpolareBiliniara, rightFormula, leftFormula };
+export { interpolareBiliniara, concatenareValori, getH };
