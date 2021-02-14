@@ -21,7 +21,6 @@ function App() {
 
   const overflow = Overflow({ m: parametriDeversor.m, b: parametriDeversor.b, NNR: 105 })
 
-
   const generateHidrograph = (timpViituraSecunde, debiteViitura) => {
     let Q = [0];
     let arrayH = [NNR]
