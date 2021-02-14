@@ -1,8 +1,8 @@
 {
+  "homepage": "http://adizanoaga.github.io/dam-flow",
   "name": "app",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://adizanoaga.github.io/dam-flow",
   "dependencies": {
     "@testing-library/jest-dom": "^5.11.5",
     "@testing-library/react": "^11.1.0",
