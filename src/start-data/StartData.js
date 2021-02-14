@@ -1,5 +1,5 @@
 import { concatenareValori } from '../components/utility-functions/UtilityFunctions'
-import { data } from './Lacuri/Ibaneasa.data'
+import { data } from './lacuri/Ibaneasa.data'
 
 const timpViituraOre = data.timpViitura
 const timpViituraSecunde = timpViituraOre.map(item => item * 3600)
@@ -18,7 +18,6 @@ const volumeAtenuare = ((coteLac, suprafeteLac) => {
   return volume
 })(coteLac, suprafeteLac);
 
-const timpDebitSecunde = concatenareValori(timpViituraSecunde, debiteViitura);
 const timpDebitOre = concatenareValori(timpViituraOre, debiteViitura);
 const cotaVolumAtenuat = concatenareValori(coteLac, volumeAtenuare)
 
@@ -28,7 +27,6 @@ export {
   timpViituraOre,
   debiteViitura,
   coteLac,
-  timpDebitSecunde,
   timpDebitOre,
   NNR,
   cotaVolumAtenuat,

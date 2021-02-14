@@ -4,7 +4,6 @@ import {
   timpViituraSecunde,
   debiteViitura,
   coteLac,
-  timpDebitSecunde,
   timpDebitOre,
   NNR,
   cotaVolumAtenuat,
@@ -60,13 +59,6 @@ function App() {
     }
   ]
 
-  const dateHQ = [
-    {
-      label: 'Viitura',
-      data: generareGrafic.cotaAtenuare,
-    },
-  ]
-
   const timpCota = [{
     label: 'Viitura',
     data: generareGrafic.timpCota,
@@ -75,7 +67,6 @@ function App() {
   return (
     <div className="App">
       <MyChart data={dateHidrograf} />
-      {/* <MyChart data={dateHQ} /> */}
       <MyChart data={timpCota} />
     </div>
   );
