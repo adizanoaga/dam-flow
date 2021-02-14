@@ -31,5 +31,6 @@ export {
   NNR,
   cotaVolumAtenuat,
   parametriDeversor,
-  concatenareValori
+  concatenareValori,
+  data as initialData
 };

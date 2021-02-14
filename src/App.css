@@ -2,3 +2,9 @@
   text-align: center;
   padding:50px
 }
+
+.tableAndInfo {
+  display:flex;
+  gap:10%;
+  justify-content: space-around;
+}

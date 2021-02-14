@@ -9,7 +9,8 @@ import {
   cotaVolumAtenuat,
   parametriDeversor,
   concatenareValori,
-  timpViituraOre
+  timpViituraOre,
+  initialData
 } from './start-data/StartData';
 import {
   interpolareBiliniara,
@@ -63,11 +64,21 @@ function App() {
     data: generareGrafic.timpCota,
   },]
 
+  const jsonData = JSON.stringify(initialData, undefined, 2)
+
   return (
     <div className="App">
-      <MyChart data={dateHidrograf} />
-      <MyChart data={timpCota} />
       <div >Test app</div>
+
+      <div>
+        <div className='tableAndInfo'>
+          <div>
+            <MyChart data={dateHidrograf} />
+            <MyChart data={timpCota} />
+          </div>
+          <pre style={{ textAlign: 'initial' }}>{jsonData}</pre>
+        </div>
+      </div>
     </div>
   );
 }
