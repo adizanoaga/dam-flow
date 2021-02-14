@@ -1,80 +1,82 @@
 import './App.css';
 import { MyChart } from './components/chart/MyChart';
 import {
-  timpViitura,
+  timpViituraSecunde,
   debiteViitura,
   coteLac,
-  suprafeteLac,
-  timpDebit,
+  timpDebitSecunde,
+  timpDebitOre,
   NNR,
-  cotaSuprafata,
   cotaVolumAtenuat,
-  overflowParameter,
-  concatenareValori
-} from './mock-data/MockData';
+  parametriDeversor,
+  concatenareValori,
+  timpViituraOre
+} from './start-data/StartData';
 import {
-  interpolareBiliniara, rightFormula,
+  interpolareBiliniara,
+  getH
 } from './components/utility-functions/UtilityFunctions';
 import { Overflow } from './components/overflow/Overflow'
 
 function App() {
 
-  const overflow = Overflow({ m: overflowParameter.m, b: overflowParameter.b, NNR: 105 })
+  const overflow = Overflow({ m: parametriDeversor.m, b: parametriDeversor.b, NNR: 105 })
 
-  const round = (number) => Math.round(number * 100) / 100
 
-  const getH = (deltaT, leftSum) => {
-    let maxH = 117.5;
-    let increment = 0.1
-    for (let H = NNR; H < maxH; H += increment) {
-      let S2 = interpolareBiliniara(H, cotaVolumAtenuat)
-      let Q2 = overflow.outflow(H)
-      let rightSum = 2 * S2 / deltaT + Q2
-      if (rightSum / leftSum > 0.95) {
-        return H
-      }
-    }
-  }
-  const generateHidrograph = (timpViitura, debiteViitura) => {
+  const generateHidrograph = (timpViituraSecunde, debiteViitura) => {
     let Q = [0];
+    let arrayH = [NNR]
     let left = 0;
-    for (let i = 0; i < timpViitura.length - 1 - 2; i++) {
+    for (let i = 0; i < timpViituraSecunde.length - 1; i++) {
       let I1 = debiteViitura[i];
       let I2 = debiteViitura[i + 1]
-      let deltaT = timpViitura[i + 1] - timpViitura[i]
+      let deltaT = timpViituraSecunde[i + 1] - timpViituraSecunde[i]
       let leftSum = I1 + I2 + left;
-      console.log(i, I1, I2, left, I1 + I2 + left, leftSum)
-      let H = getH(deltaT, leftSum)
+      let H = getH(NNR, overflow, coteLac, cotaVolumAtenuat, deltaT, leftSum)
       let Q2 = overflow.outflow(H)
-      console.log(H, Q2)
-      // console.log(H)
       let S2 = interpolareBiliniara(H, cotaVolumAtenuat)
       left = 2 * S2 / deltaT - 2 * Q2
       Q.push(Q2)
+      arrayH.push(H)
     }
-    console.log(Q)
-    return concatenareValori(timpViitura.slice(0, -2), Q);
+    return {
+      timpAtenuare: concatenareValori(timpViituraOre, Q),
+      cotaAtenuare: concatenareValori(arrayH, Q),
+      timpCota: concatenareValori(timpViituraOre, arrayH)
+    }
   }
 
-  const timpDebitAtenuare = generateHidrograph(timpViitura, debiteViitura)
+  const generareGrafic = generateHidrograph(timpViituraSecunde, debiteViitura)
+  const timpDebitAtenuare = generareGrafic.timpAtenuare
 
+  const dateHidrograf = [
+    {
+      label: 'Viitura',
+      data: timpDebitOre
+    },
+    {
+      label: 'Grafic atenuare',
+      data: timpDebitAtenuare
+    }
+  ]
 
-  const data = {
-    timpViitura: timpViitura,
-    debiteViitura: debiteViitura,
-    coteLac: coteLac,
-    suprafeteLac: suprafeteLac,
-    timpDebit: timpDebit,
-    NNR: NNR,
-    cotaSuprafata: cotaSuprafata,
-    cotaVolumAtenuat: cotaVolumAtenuat,
-    // timpDebitAtenuare: timpDebitAtenuare
-  };
+  const dateHQ = [
+    {
+      label: 'Viitura',
+      data: generareGrafic.cotaAtenuare,
+    },
+  ]
 
+  const timpCota = [{
+    label: 'Viitura',
+    data: generareGrafic.timpCota,
+  },]
 
   return (
     <div className="App">
-      <MyChart data={data} />
+      <MyChart data={dateHidrograf} />
+      {/* <MyChart data={dateHQ} /> */}
+      <MyChart data={timpCota} />
     </div>
   );
 }

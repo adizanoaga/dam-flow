@@ -2,6 +2,7 @@
   "name": "app",
   "version": "0.1.0",
   "private": true,
+  "homepage": "http://adizanoaga.github.io/dam-flow",
   "dependencies": {
     "@testing-library/jest-dom": "^5.11.5",
     "@testing-library/react": "^11.1.0",
@@ -17,7 +18,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": [
@@ -41,6 +44,7 @@
     "eslint": "^7.19.0",
     "eslint-config-prettier": "^7.2.0",
     "eslint-plugin-prettier": "^3.3.1",
+    "gh-pages": "^3.1.0",
     "prettier": "^2.2.1"
   }
 }
