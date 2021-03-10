@@ -8,6 +8,7 @@ const coteLac = data.coteLac
 const suprafeteLac = data.suprafeteLac
 const NNR = data.NNR
 const parametriDeversor = data.parametriDeversor;
+const suprafete = data.suprafeteLac
 
 const volumeAtenuare = ((coteLac, suprafeteLac) => {
   let volume = [0]
@@ -30,6 +31,7 @@ export {
   timpDebitOre,
   NNR,
   cotaVolumAtenuat,
+  suprafete,
   parametriDeversor,
   concatenareValori,
   data as initialData
