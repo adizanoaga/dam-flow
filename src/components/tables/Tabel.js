@@ -13,7 +13,7 @@ const range = (len) => {
 };
 
 
-export const Tabel = ({ numeTabel = '', nrRanduri = 10, nrColoane = 2, titluColoana1 = '', titluColoana2 = '', titluColoana3 = '', defaultData = false, setGlobalState, globalState }) => {
+export const Tabel = ({ numeTabel = '', nrRanduri = 10, nrColoane = 2, titluColoana1 = '', titluColoana2 = '', titluColoana3 = '', defaultData = false }) => {
     const [tableData,] = useState(defaultData ? defaultData : range(nrRanduri))
 
     const context = useContext(MyContext)
@@ -25,7 +25,7 @@ export const Tabel = ({ numeTabel = '', nrRanduri = 10, nrColoane = 2, titluColo
             ref.current = val
             tableData[props.info.original.id][props.info.column.id] = Number(val)
             context[numeTabel] = tableData
-            console.log(context)
+            context.update()
         }
         return <div><input type={'number'} ref={ref} defaultValue={ref.current} style={{ width: '80%' }}
             onChange={(e) => { inputValueUpdate(e.target.value) }}
@@ -53,7 +53,8 @@ export const Tabel = ({ numeTabel = '', nrRanduri = 10, nrColoane = 2, titluColo
             Cell: (info) => {
                 return <Cell info={info} />
             },
-            show: nrColoane > 1
+            show: nrColoane > 1,
+            minWidth: 110
         },
         {
             Header: titluColoana3,
@@ -61,7 +62,8 @@ export const Tabel = ({ numeTabel = '', nrRanduri = 10, nrColoane = 2, titluColo
             Cell: (info) => {
                 return <Cell info={info} />
             },
-            show: nrColoane > 2
+            show: nrColoane > 2,
+            minWidth: 110
         }
     ]
 
