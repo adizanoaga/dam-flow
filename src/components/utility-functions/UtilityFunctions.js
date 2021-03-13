@@ -22,7 +22,7 @@ const concatenareValori = (x, y) => {
 
 const getH = (NNR, overflow, coteLac, cotaVolumAtenuat, deltaT, leftSum) => {
   let maxH = coteLac[coteLac.length - 1];
-  let increment = 0.01
+  let increment = 0.1
   for (let H = NNR; H < maxH; H += increment) {
     let S2 = interpolareBiliniara(H, cotaVolumAtenuat)
     let Q2 = overflow.outflow(H)
