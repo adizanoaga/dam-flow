@@ -87,7 +87,7 @@ export const AppCompute = () => {
 
     ]
     return <div>
-        <div>
+        <div className={'containedItem'} style={{ zIndex: '9999', marginRight: '50px' }}>
             <MyChart data={dateHidrograf} />
             <MyChart data={timpCota} />
         </div>

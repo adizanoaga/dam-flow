@@ -1,4 +1,6 @@
 import { data } from './lacuri/Ibaneasa.data'
+// import { data } from './lacuri/Sendriceni.data'
+// import { data } from './lacuri/ConfigInitial'
 
 const timpViituraOre = data.timpViitura
 const debiteViitura = data.debiteViitura

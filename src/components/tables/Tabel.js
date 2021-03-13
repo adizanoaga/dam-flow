@@ -13,7 +13,7 @@ const range = (len) => {
 };
 
 
-export const Tabel = ({ numeTabel = '', nrRanduri = 10, nrColoane = 2, titluColoana1 = '', titluColoana2 = '', titluColoana3 = '', defaultData = false }) => {
+export const Tabel = ({ numeTabel = '', nrRanduri = 10, nrColoane = 2, titluColoana1 = '', titluColoana2 = '', titluColoana3 = '', defaultData = false, coloaneNonEditabile = [] }) => {
     const [tableData,] = useState(defaultData ? defaultData : range(nrRanduri))
 
     const context = useContext(MyContext)
@@ -27,8 +27,11 @@ export const Tabel = ({ numeTabel = '', nrRanduri = 10, nrColoane = 2, titluColo
             context[numeTabel] = tableData
             context.update()
         }
-        return <div><input type={'number'} ref={ref} defaultValue={ref.current} style={{ width: '80%' }}
-            onChange={(e) => { inputValueUpdate(e.target.value) }}
+        return <div><input type={'number'} ref={ref} defaultValue={ref.current} style={{ width: '80%', zIndex: '1000' }}
+            onBlur={(e, e2) => { inputValueUpdate(e.target.value) }}
+            onKeyUp={(e) => {
+                if (e.code === 'Enter') inputValueUpdate(e.target.value)
+            }}
         /></div>
     }
 
@@ -42,6 +45,7 @@ export const Tabel = ({ numeTabel = '', nrRanduri = 10, nrColoane = 2, titluColo
             Header: titluColoana1,
             accessor: 'col1',
             Cell: (info) => {
+                if (coloaneNonEditabile.find(i => i === 'col1')) return <div>{info.original.col1}</div>
                 return <Cell info={info} />
             },
             show: nrColoane > 0,
@@ -51,6 +55,8 @@ export const Tabel = ({ numeTabel = '', nrRanduri = 10, nrColoane = 2, titluColo
             Header: titluColoana2,
             accessor: 'col2',
             Cell: (info) => {
+                if (coloaneNonEditabile.find(i => i === 'col1')) return <div>{info.original.col2}</div>
+
                 return <Cell info={info} />
             },
             show: nrColoane > 1,
@@ -60,6 +66,8 @@ export const Tabel = ({ numeTabel = '', nrRanduri = 10, nrColoane = 2, titluColo
             Header: titluColoana3,
             accessor: 'col3',
             Cell: (info) => {
+                if (coloaneNonEditabile.find(i => i === 'col1')) return <div>{info.originalcol3}</div>
+
                 return <Cell info={info} />
             },
             show: nrColoane > 2,
@@ -67,11 +75,11 @@ export const Tabel = ({ numeTabel = '', nrRanduri = 10, nrColoane = 2, titluColo
         }
     ]
 
-    return <form onSubmit={e => { e.preventDefault() }}>
+    return <div className={'containedItem'}><form onSubmit={e => { e.preventDefault() }}>
         <ReactTable
             data={tableData}
             columns={configColoane}
             showPagination={false}
             defaultPageSize={tableData.length}
-        /></form >
+        /></form ></div>
 }

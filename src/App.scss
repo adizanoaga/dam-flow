@@ -1,0 +1,18 @@
+.App {
+  text-align: center;
+  padding:50px;
+  background: #e4e4e2;
+  height:89vh;
+  .containedItem  { 
+    background:rgb(247, 243, 243);
+  }
+  .title {
+    padding-bottom:20px;
+  }
+}
+
+.tableAndInfo {
+  display:flex;
+  gap:50px;
+  justify-content: space-around;
+}
